@@ -194,65 +194,65 @@ if __name__ == "__main__":
 
     epochs = 25
 
-    # for _e in range(epochs):
-    #     model.train()
+     for _e in range(epochs):
+         model.train()
 
-    #     loss_mean = 0
-    #     lm_count = 0
+         loss_mean = 0
+         lm_count = 0
 
-    #     train_tqdm = tqdm(train_data)
-    #     for x_train, y_train in train_tqdm:
-    #         x_train = x_train.to(device)
-    #         y_train = y_train.to(device)
-    #         predict = model(x_train)
-    #         loss = loss1(predict, y_train) + loss2(predict, y_train)
+         train_tqdm = tqdm(train_data)
+         for x_train, y_train in train_tqdm:
+             x_train = x_train.to(device)
+             y_train = y_train.to(device)
+             predict = model(x_train)
+             loss = loss1(predict, y_train) + loss2(predict, y_train)
 
-    #         optimizer.zero_grad()
-    #         loss.backward()
-    #         optimizer.step()
+             optimizer.zero_grad()
+             loss.backward()
+             optimizer.step()
 
-    #         lm_count += 1
-    #         loss_mean = 1/lm_count * loss.item() + (1 - 1/lm_count) * loss_mean
-    #         train_tqdm.set_description(f"Epoch [{_e+1}/{epochs}], loss_mean={loss_mean}")
+             lm_count += 1
+             loss_mean = 1/lm_count * loss.item() + (1 - 1/lm_count) * loss_mean
+             train_tqdm.set_description(f"Epoch [{_e+1}/{epochs}], loss_mean={loss_mean}")
 
-    #     #Валидация модели
-    #     model.eval()
-    #     Q_val = 0
-    #     count_val = 0
+         #Валидация модели
+         model.eval()
+         Q_val = 0
+         count_val = 0
 
-    #     for x_val, y_val in val_data:
-    #         x_val = x_val.to(device)
-    #         y_val = y_val.to(device)
-    #         with torch.no_grad():
-    #             predict = model(x_val)
-    #             loss = loss1(predict, y_val) + loss2(predict, y_val)
-    #             Q_val += loss.item()
-    #             count_val += 1
-    #     Q_val /= count_val
+         for x_val, y_val in val_data:
+             x_val = x_val.to(device)
+             y_val = y_val.to(device)
+             with torch.no_grad():
+                 predict = model(x_val)
+                 loss = loss1(predict, y_val) + loss2(predict, y_val)
+                 Q_val += loss.item()
+                 count_val += 1
+         Q_val /= count_val
 
-    #     loss_lst_train.append(loss_mean)
-    #     loss_lst_val.append(Q_val)
-    #     print(f"validation_loss={Q_val}")
+         loss_lst_train.append(loss_mean)
+         loss_lst_val.append(Q_val)
+         print(f"validation_loss={Q_val}")
 
     #Сохранение модели
-    # st = model.state_dict()
-    # torch.save(st, 'odetojoy.tar')
+     st = model.state_dict()
+     torch.save(st, 'odetojoy.tar')
     #Загрузка модели
     #------
-    st = torch.load("odetojoy.tar", weights_only=True)
-    model.load_state_dict(st)
+    #st = torch.load("odetojoy.tar", weights_only=True)
+    #model.load_state_dict(st)
     #-----
     
-    # plt.figure(figsize=(10, 6))
-    # plt.plot(range(1, epochs + 1), loss_lst_train, label="train", marker="o")
-    # plt.plot(range(1, epochs + 1), loss_lst_val, label="val", marker="s")
-    # plt.xlabel("Epoch")
-    # plt.ylabel("Loss")
-    # plt.title("Train vs Val Loss")
-    # plt.legend()
-    # plt.grid(True)
-    # plt.xticks(range(1, epochs + 1))
-    # plt.show()
+     plt.figure(figsize=(10, 6))
+     plt.plot(range(1, epochs + 1), loss_lst_train, label="train", marker="o")
+     plt.plot(range(1, epochs + 1), loss_lst_val, label="val", marker="s")
+     plt.xlabel("Epoch")
+     plt.ylabel("Loss")
+     plt.title("Train vs Val Loss")
+     plt.legend()
+     plt.grid(True)
+     plt.xticks(range(1, epochs + 1))
+     plt.show()
 
 
     #Тестирование
